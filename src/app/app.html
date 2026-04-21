@@ -1,11 +1,20 @@
-<P>{{ recipie().name }}</P>
-<P>{{ recipie().description }}</P>
-<p>Count: {{ count() }}</p>
-<div class="buttons">
-  <button (click)="handleButton1Click()">First recipe</button>
-  <button (click)="handleButton2Click()">Second recipe</button>
+<h1>Smart Recipe Box</h1>
+
+<h2>{{ recipe().name }}</h2>
+<p>{{ recipe().description }}</p>
+<img [src]="recipe().imgUrl" [alt]="recipe().name" />
+
+<div>
+  <h3>Servings: {{ servings() }}</h3>
+  <button (click)="decrement()">-</button>
+  <button (click)="increment()">+</button>
 </div>
-<div class="buttons">
-  <button class="button" (click)="decrement()">-</button>
-  <button class="button" (click)="increment()">+</button>
-</div>
+
+<h3>Ingredients</h3>
+<!-- We use the json pipe here for now to easily see the data object -->
+<pre>{{ adjustedIngredients() | json }}</pre>
+
+<hr />
+
+<button (click)="handleButton1Click()">Show Spaghetti Carbonara</button>
+<button (click)="handleButton2Click()">Show Caprese Salad</button>
