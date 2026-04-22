@@ -1,30 +1,30 @@
-import { Component, computed, signal } from '@angular/core';
-import { MOCK_RECIPES } from '../mock-recipes';
+import { Component, computed, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms'; // Required for two-way binding
 import { RecipeModel } from '../models';
-import { JsonPipe } from '@angular/common';
+import { RecipeDetail } from '../recipe-detail/recipe-detail';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
-  imports: [JsonPipe],
+  imports: [RecipeDetail, FormsModule],
   templateUrl: './recipe-list.html',
   styleUrl: './recipe-list.scss',
 })
 export class RecipeList {
-    protected readonly recipe = signal<RecipeModel>(MOCK_RECIPES[0]);
-   protected readonly servings = signal(2);
-    //protected readonly adjustedIngredients =
-    protected readonly adjustedIngredients = computed(() => {
-      return this.recipe().ingredients.map((item) => {
-        return { ...item, quantity: item.quantity * this.servings() };
-      });
+    private readonly recipeService = inject(RecipeService);
+    protected readonly recipes = this.recipeService.getRecipes();
+    protected readonly recipe = signal<RecipeModel>(this.recipes()[0]);
+    protected readonly searchTerm = signal('');
+
+    // Computed signal that automatically filters recipes based on searchTerm
+    protected readonly filteredRecipes = computed(() => {
+      const term = this.searchTerm().toLowerCase().trim();
+      if (!term) return this.recipes();
+      return this.recipes().filter(r => r.name.toLowerCase().includes(term));
     });
 
-    protected increment(): void {
-    this.servings.update((currentServings) => currentServings + 1);
-  }
 
-  protected decrement(): void {
-    this.servings.update((currentServings) => Math.max(1, currentServings - 1));
-  }
-
+    selectRecipe(recipe: RecipeModel): void {
+      this.recipe.set(recipe);
+    }
 }

@@ -1,0 +1,30 @@
+<div class="recipe-container">
+  <div class="recipe-header">
+    <img [src]="recipe().imgUrl" [alt]="recipe().name" class="recipe-image" />
+    <div class="recipe-info">
+      <h2 class="recipe-name">{{ recipe().name }}</h2>
+      <p class="recipe-description">{{ recipe().description }}</p>
+    </div>
+  </div>
+
+  <div class="servings-adjuster">
+    <h3 class="adjuster-label">Servings: {{ servings() }}</h3>
+    <div class="adjuster-controls">
+      <button (click)="decrement()" class="adj-btn">-</button>
+      <button (click)="increment()" class="adj-btn">+</button>
+    </div>
+  </div>
+
+  <div class="ingredients-section">
+    <h3 class="section-title">Ingredients</h3>
+    <!-- We use the json pipe here for now to easily see the data object -->
+   <!--  <pre class="debug-data">{{ adjustedIngredients() | json }}</pre> -->
+     <ul class="ingredients-list">
+    @for (ingredient of adjustedIngredients(); track ingredient.name) {
+      <p>{{ ingredient.quantity }}{{ ingredient.unit }} {{ ingredient.name }}:</p>
+     }
+    </ul>
+
+
+  </div>
+</div>
