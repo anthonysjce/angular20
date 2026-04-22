@@ -1,0 +1,17 @@
+
+
+<h2>{{ recipe().name }}</h2>
+<p>{{ recipe().description }}</p>
+<img [src]="recipe().imgUrl" [alt]="recipe().name" />
+
+<div>
+  <h3>Servings: {{ servings() }}</h3>
+  <button (click)="decrement()">-</button>
+  <button (click)="increment()">+</button>
+</div>
+
+<h3>Ingredients</h3>
+<!-- We use the json pipe here for now to easily see the data object -->
+<pre>{{ adjustedIngredients() | json }}</pre>
+
+<hr />
