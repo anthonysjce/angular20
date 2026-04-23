@@ -11,4 +11,8 @@ export class RecipeService {
   getRecipes() {
     return this.recipes.asReadonly();
   }
+
+  getRecipeById(id: number) {
+    return this.recipes().find(r => r.id === id);
+  }
 }

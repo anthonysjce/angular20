@@ -1,13 +1,14 @@
-<input type="text" placeholder="Search recipes..." [(ngModel)]="searchTerm"/>
-<app-recipe-detail [recipe]="recipe()"></app-recipe-detail>
+<div class="search-container">
+  <input type="text" placeholder="Search recipes..." [(ngModel)]="searchTerm" class="search-input"/>
+</div>
 
 <div class="recipe-selector">
   @for (r of filteredRecipes(); track r.id) {
-    <button (click)="selectRecipe(r)" class="recipe-btn" [class.active]="r.id === recipe().id">
+    <a [routerLink]="['/recipes', r.id]" class="recipe-btn">
       {{ r.name }}
       @if (r.isFavorite) {
         <span class="favorite-star">★</span>
       }
-    </button>
+    </a>
   }
 </div>

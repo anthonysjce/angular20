@@ -1,30 +1,40 @@
-<div class="recipe-container">
-  <div class="recipe-header">
-    <img [src]="recipe().imgUrl" [alt]="recipe().name" class="recipe-image" />
-    <div class="recipe-info">
-      <h2 class="recipe-name">{{ recipe().name }}</h2>
-      <p class="recipe-description">{{ recipe().description }}</p>
-    </div>
-  </div>
-
-  <div class="servings-adjuster">
-    <h3 class="adjuster-label">Servings: {{ servings() }}</h3>
-    <div class="adjuster-controls">
-      <button (click)="decrement()" class="adj-btn">-</button>
-      <button (click)="increment()" class="adj-btn">+</button>
-    </div>
-  </div>
-
-  <div class="ingredients-section">
-    <h3 class="section-title">Ingredients</h3>
-    <!-- We use the json pipe here for now to easily see the data object -->
-   <!--  <pre class="debug-data">{{ adjustedIngredients() | json }}</pre> -->
-     <ul class="ingredients-list">
-    @for (ingredient of adjustedIngredients(); track ingredient.name) {
-      <p>{{ ingredient.quantity }}{{ ingredient.unit }} {{ ingredient.name }}:</p>
-     }
-    </ul>
-
-
-  </div>
+<div class="navigation">
+  <a routerLink="/recipes" class="back-link">← Back to Recipes</a>
 </div>
+
+@if (recipe(); as r) {
+  <div class="recipe-container">
+    <div class="recipe-header">
+      <img [src]="r.imgUrl" [alt]="r.name" class="recipe-image" />
+      <div class="recipe-info">
+        <h2 class="recipe-name">{{ r.name }}</h2>
+        <p class="recipe-description">{{ r.description }}</p>
+      </div>
+    </div>
+
+    <div class="servings-adjuster">
+      <h3 class="adjuster-label">Servings: {{ servings() }}</h3>
+      <div class="adjuster-controls">
+        <button (click)="decrement()" class="adj-btn">-</button>
+        <button (click)="increment()" class="adj-btn">+</button>
+      </div>
+    </div>
+
+    <div class="ingredients-section">
+      <h3 class="section-title">Ingredients</h3>
+      <ul class="ingredients-list">
+        @for (ingredient of adjustedIngredients(); track ingredient.name) {
+          <li class="ingredient-item">
+            <span class="ingredient-name">{{ ingredient.name }}</span>
+            <span class="ingredient-quantity">{{ ingredient.quantity }}{{ ingredient.unit }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+} @else {
+  <div class="error-container">
+    <h2>Recipe not found</h2>
+    <p>Sorry, we couldn't find the recipe you're looking for.</p>
+  </div>
+}
