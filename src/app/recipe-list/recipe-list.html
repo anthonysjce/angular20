@@ -1,5 +1,11 @@
 <div class="search-container">
-  <input type="text" placeholder="Search recipes..." [(ngModel)]="searchTerm" class="search-input"/>
+  <input
+    type="text"
+    placeholder="Search recipes..."
+    [(ngModel)]="searchTerm"
+    class="search-input"
+  />
+  <button mat-stroked-button (click)="handleAddRecipe()">Add Recipe</button>
 </div>
 
 <div class="recipe-selector">

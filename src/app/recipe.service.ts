@@ -3,7 +3,7 @@ import { MOCK_RECIPES } from './mock-recipes';
 import { RecipeModel } from './models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RecipeService {
   private readonly recipes = signal<RecipeModel[]>(MOCK_RECIPES);
@@ -13,6 +13,9 @@ export class RecipeService {
   }
 
   getRecipeById(id: number) {
-    return this.recipes().find(r => r.id === id);
+    return this.recipes().find((r) => r.id === id);
+  }
+  addRecipe(recipe: RecipeModel) {
+    this.recipes.update((recipes) => [...recipes, recipe]);
   }
 }
